@@ -8,6 +8,6 @@ def startWith(string, prefix):
 
 def deletePrefix(string, prefix):
   if(startWith(string, prefix)):
-    return string[len(prefix):]
+    return string[len(prefix)+1:]
   else:
     return string
