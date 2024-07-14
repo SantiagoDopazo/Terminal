@@ -1,5 +1,5 @@
 import sys
-
+from utils import *
 
 def main():
     while True:
@@ -10,7 +10,10 @@ def main():
       command = input()
       if(command == "exit 0"):
         sys.exit(0)
-      print(f"{command}: command not found")
+      elif(startWith(command, "echo")):
+        print(f"{deletePrefix(command, "echo")}")
+      else:
+        print(f"{command}: command not found")
 
     
 
