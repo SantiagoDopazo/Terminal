@@ -1,22 +1,35 @@
 import sys
 from utils import *
+import os
 
 def main():
+    PATH =  os.environ.get("PATH")
+    paths =  PATH.split(os.pathsep)
+    builtinCommands = ["echo", "exit", "type"]
+    #print(f"{PATH}")
+    print(f"{paths}")
     while True:
       sys.stdout.write("$ ")
       sys.stdout.flush()
-      builtinCommands = ["echo", "exit", "type"]
+      
       # Wait for user input
       command = input()
       if(command == "exit 0"):
         sys.exit(0)
-      elif(startWith(command, "echo")):
+
+      if(startWith(command, "echo")):
         print(f"{deletePrefix(command, "echo")}")
-      elif(startWith(command, "type")):
-          if deletePrefix(command, "type") in builtinCommands:
-            print(f"{deletePrefix(command, "type")} is a shell builtin")
+
+      if(startWith(command, "type")):
+        cmd = deletePrefix(command, "type")
+        if cmd in builtinCommands:
+          print(f"{cmd} is a shell builtin")
+        else:
+          cmd_path = searchCommand(cmd, paths)
+          if(cmd_path):
+            print(f"{cmd} is {cmd_path}")
           else:
-            print(f"{deletePrefix(command, "type")}: not found")
+            print(f"{cmd}: not found")
       else:
         print(f"{command}: command not found")
 
